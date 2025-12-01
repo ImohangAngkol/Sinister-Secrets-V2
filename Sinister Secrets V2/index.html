@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Horror Maze JS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="assets/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Main Menu -->
+    <div id="main-menu" class="menu visible">
+      <h1>Horror Maze</h1>
+      <button data-action="play">Play</button>
+      <button data-action="continue">Continue</button>
+      <button data-action="load">Load Game</button>
+      <button data-action="settings">Settings</button>
+      <button data-action="credits">Credits</button>
+      <button data-action="quit">Quit</button>
+      <div id="credits" class="panel hidden">
+        <h2>Credits</h2>
+        <p>Design & Code: You</p>
+        <p>Engine: Vanilla JS (Raycasting)</p>
+      </div>
+    </div>
+
+    <!-- Pause Menu -->
+    <div id="pause-menu" class="menu hidden">
+      <h2>Paused</h2>
+      <button data-action="resume">Resume</button>
+      <button data-action="save">Save Game</button>
+      <button data-action="load">Load Game</button>
+      <button data-action="settings">Settings</button>
+      <button data-action="exit">Exit to Main Menu</button>
+    </div>
+
+    <!-- Settings -->
+    <div id="settings-menu" class="menu hidden">
+      <h2>Settings</h2>
+      <div class="grid">
+        <label>Graphics Quality
+          <select id="graphicsQuality">
+            <option>Low</option><option selected>Med</option><option>High</option>
+          </select>
+        </label>
+        <label>View Distance (m)
+          <input type="range" id="viewDistance" min="4" max="20" step="1" value="10">
+        </label>
+        <label>Fog Amount
+          <input type="range" id="fogAmount" min="0" max="1" step="0.05" value="0.5">
+        </label>
+        <label>Master Volume
+          <input type="range" id="masterVolume" min="0" max="1" step="0.05" value="0.7">
+        </label>
+        <label>SFX Volume
+          <input type="range" id="sfxVolume" min="0" max="1" step="0.05" value="0.9">
+        </label>
+        <label>Ambient Volume
+          <input type="range" id="ambientVolume" min="0" max="1" step="0.05" value="0.4">
+        </label>
+        <label>Mouse Sensitivity
+          <input type="range" id="mouseSensitivity" min="0.1" max="2" step="0.05" value="0.6">
+        </label>
+        <label>Flashlight Brightness
+          <input type="range" id="flashlightBrightness" min="0.2" max="2" step="0.05" value="1">
+        </label>
+        <label>Battery Drain Multiplier
+          <input type="range" id="batteryDrain" min="0.5" max="3" step="0.1" value="1">
+        </label>
+        <label>UI Scale
+          <input type="range" id="uiScale" min="0.8" max="1.5" step="0.05" value="1">
+        </label>
+        <label>Subtitles
+          <input type="checkbox" id="subtitles">
+        </label>
+        <label>Colorblind Mode
+          <input type="checkbox" id="colorblindMode">
+        </label>
+        <button id="controlsRemap">Remap Controls</button>
+      </div>
+      <div class="actions">
+        <button id="applySettings">Apply</button>
+        <button id="closeSettings">Close</button>
+      </div>
+    </div>
+
+    <!-- Load/Save UI -->
+    <div id="save-load-menu" class="menu hidden">
+      <h2>Save / Load</h2>
+      <div id="slots" class="slots"></div>
+      <div class="actions">
+        <button id="exportSlot">Export JSON</button>
+        <input id="importFile" type="file" accept="application/json" />
+        <button id="importSlot">Import JSON to Selected</button>
+        <button id="deleteSlot">Delete</button>
+        <button id="renameSlot">Rename</button>
+        <button id="closeSaveLoad">Close</button>
+      </div>
+    </div>
+
+    <!-- Canvas & HUD -->
+    <canvas id="gameCanvas" width="1280" height="720" class="hidden"></canvas>
+    <div id="hud" class="hud hidden">
+      <div class="bar">
+        <span>Battery</span>
+        <div class="bar-bg"><div id="batteryBar" class="bar-fill"></div></div>
+      </div>
+      <div class="bar">
+        <span>Stamina</span>
+        <div class="bar-bg"><div id="staminaBar" class="bar-fill"></div></div>
+      </div>
+      <div id="toast-container" class="toasts"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Game } from './js/game.js';
+    const game = new Game();
+    window.__game = game; // Dev convenience
+  </script>
+</body>
+</html>
